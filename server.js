@@ -1,12 +1,18 @@
-import mongoose from "mongoose";
 import express from "express";
-import dotenv from "dotenv";
-dotenv.config();
+import cors from "cors";
+import 'dotenv/config';
+import cookieParser from "cookie-parser";
+
+import connectDB from "./config/mongodb.js";
 
 const app = express();
+const port = process.env.PORT || 8000;
+connectDB();
 
-const PORT = process.env.PORT || 8000;
+app.use(express.json());
+app.use(cookieParser());
+app.use(cors({credentials:true}))
 
-app.listen(PORT, ()=>{
-    console.log(`Server started at localhost ${PORT}`);
+app.listen(port, ()=>{
+    console.log(`Server running on port ${port}`);
 })
