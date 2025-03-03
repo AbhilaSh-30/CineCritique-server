@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  mongo_db:
+    container_name: cinecritique_container
+    image: mongo:latest
+    restart: always
+    volumes:
+      - mongo_db:/data/db
+
+  api:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    env_file:
+      - .env
+    depends_on:
+      - mongo_db
+
+volumes:
+  mongo_db: 
