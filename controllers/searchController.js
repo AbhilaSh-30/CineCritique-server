@@ -6,7 +6,7 @@ export const searchMovie = async(req,res) =>{
     const { query } = req.params;
     try {
       const response = await axios.get(
-        `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${query}`
+        `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${query}&include_adult=false`
       );
       res.json(response.data.results);
     } catch (error) {

@@ -8,6 +8,7 @@ import authRouter from "./routers/authRouter.js";
 import userRouter from "./routers/userRouter.js";
 import searchRouter from "./routers/searchRouter.js";
 import detailsRouter from "./routers/detailsRouter.js";
+import reviewRouter from "./routers/reviewRouter.js";
 
 const app = express();
 const port = process.env.PORT || 8000;
@@ -23,6 +24,7 @@ app.use('/api/auth',authRouter);
 app.use('/api/user',userRouter);
 app.use('/api/search',searchRouter);
 app.use('/api/details',detailsRouter);
+app.use('/api/reviews',reviewRouter);
 
 app.listen(port, ()=>{
     console.log(`Server running on port ${port}`);
