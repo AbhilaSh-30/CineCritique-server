@@ -16,7 +16,14 @@ export const getMovie = async (req, res) => {
   };
 
   try {
-    // Fetch all API responses in parallel
+
+    const requests = Object.values(urls).map(url => 
+      axios.get(url).catch(error => {
+        console.error(`Failed to fetch ${url}:`, error.message);
+        return { data: null };
+      })
+    );
+
     const [
       details,
       credits,
@@ -25,9 +32,9 @@ export const getMovie = async (req, res) => {
       videos,
       watchProviders,
       releaseDates,
-    ] = await Promise.all(
-      Object.values(urls).map((url) => axios.get(url))
-    );
+    ] = await Promise.all(requests);
+
+    // console.log(details.data);
 
     // Extract Indian release date and certification
     const indiaRelease = releaseDates.data.results.find(
@@ -41,7 +48,8 @@ export const getMovie = async (req, res) => {
         }))
       : null;
 
-    // Send combined response
+    // console.log(details.data);
+
     res.json({
       details: details.data,
       credits: credits.data,
